@@ -1,6 +1,6 @@
 package com.vsaf.common;
 
-import com.vsaf.db.DataBaseOperations;
+import com.vsaf.common.DataBaseOperations;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
@@ -38,9 +38,7 @@ public class AreaChecker implements Serializable{
     public void setInput(Input input) {
         this.input = input;
     }
-    public void submitHandler(){
-        if(isValidInput()) addPoint(input.getX(), input.getY(), parseR(input.getR()));
-    }
+    
 
     public LinkedHashSet<Point> getPoints() {
         return points;
@@ -52,18 +50,6 @@ public class AreaChecker implements Serializable{
         } catch(Exception e){
             points = new LinkedHashSet<Point>();
         }
-    }
-    private boolean isValidInput(){
-        if(input.getR()==-1){
-            return false;
-        }
-        if(input.getX()>3||input.getX()<-5){
-            return false;
-        }
-        if(input.getY()<-3.0||input.getY()>5.0){
-            return false;
-        }
-        return true;
     }
     public void addPoint(float x, float y, float r){
         if(points.size()>0){
@@ -103,27 +89,45 @@ public class AreaChecker implements Serializable{
         this.mx = mx;
     }
 
-    private float parseR(int tmpr){
-        switch (tmpr){
-            case 0:
-                 return 1f;
-            case 1:
-                return 1.5f;
-            case 2:
-                return 2f;
-            case 3:
-                return 2.5f;
-            case 4:
-                return 3f;
-            default: return 1f;
-        }
-    }
+    // private float parseR(int tmpr){
+    //     switch (tmpr){
+    //         case 0:
+    //              return 1f;
+    //         case 1:
+    //             return 1.5f;
+    //         case 2:
+    //             return 2f;
+    //         case 3:
+    //             return 2.5f;
+    //         case 4:
+    //             return 3f;
+    //         default: return 1f;
+    //     }
+    // }
     public void setMy(float my) {
         this.my = my;
     }
+
+    private boolean isValidInput(){
+        if(input.getR()==-1){
+            return false;
+        }
+        if(input.getX()>5||input.getX()<-5){
+            return false;
+        }
+        if(input.getY()<-3.0||input.getY()>5.0){
+            return false;
+        }
+        return true;
+    }
+
+    public void submitHandler(){
+        if(isValidInput()) addPoint(input.getX(), input.getY(), input.getR());
+    }
+
     public void clickListener(AjaxBehaviorEvent e){
         if(isValidInput()) {
-            addPoint(mx, my, parseR(input.getR()));
+            addPoint(mx, my, input.getR());
         }
     }
     private String img;

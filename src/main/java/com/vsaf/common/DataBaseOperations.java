@@ -1,4 +1,4 @@
-package com.vsaf.db;
+package com.vsaf.common;
 
 import com.vsaf.common.Point;
 

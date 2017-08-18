@@ -2,17 +2,31 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
-
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+      
 <h:head>
-	<title>JSF 2.0 Hello World</title>
+   <Title>Стартовая страница</Title>
+    <link rel="stylesheet" href="all.css"></link>
 </h:head>
-<h:body>
-	<h3>JSF 2.0 Hello World Example - hello.xhtml</h3>
-	<h:form>
-		<h:inputText value="#{helloBean.name}"></h:inputText>
-		<h:commandButton value="Welcome Me" action="welcome"></h:commandButton>
-	</h:form>
-</h:body>
+   <f:view>
+       <h:outputLabel value="Норин Е. Р. Гришин Д. И."/>
+       <p>
+       P3201 Вариант 2^10
+       </p>
+       <div id="time">
+       <script type="text/javascript">
+           time = document.getElementById("time");
+           updateTime();
+           function updateTime(){
+                time.innerHTML = new Date().toLocaleString();
+                setTimeout("updateTime();", 7000);
+           }
+       </script>
+       </div>
+       <h:form>
+         <h:commandButton value="Вперде!" action="main"/>
+       </h:form>
+   </f:view>
 </html>

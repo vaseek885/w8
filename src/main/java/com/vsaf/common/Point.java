@@ -2,13 +2,6 @@ package com.vsaf.common;
 
 import java.io.Serializable;
 
-/**
- * Created by kover on 06.05.17.
- */
-
-
-
-
 public class Point implements Serializable{
 
     private long id;
