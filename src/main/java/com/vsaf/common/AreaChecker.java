@@ -15,9 +15,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 
-/**
- * Created by kover on 25.05.17.
- */
+
 public class AreaChecker implements Serializable{
     private LinkedHashSet<Point> points;
     DataBaseOperations dbOps ;

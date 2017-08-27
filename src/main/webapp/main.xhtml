@@ -11,10 +11,32 @@
     <Title>Главная страница</Title>
     <script type="text/javascript">
     	function areaClick(mouseEvent) {
-    		var r = document.getElementById("r").value;
+
+    		var rd = document.getElementById("mainform:r");
+    		var r = 1;
+
+    		if(rd != null){
+    			r = rd.value;
+    			// alert("r set to:" + r);
+    		} else {
+    			alert("rd is null");
+    		}
+
+    		var gr = document.getElementById("graph");
+    		if(gr == null){
+    			alert("graph is null");
+    		} else {
+    			// alert("graph clh" + gr.clientHeight);
+    		}
+
+
+    		// alert("msx:" + mouseEvent.pageX);
+    		// alert("msy:" + mouseEvent.pageY);
 
     		var x = 221/80*r*((mouseEvent.pageX - getLeftOffset(document.getElementById("graph")))/document.getElementById("graph").clientWidth - 0.5 );
     		var y = 221/80*r*(( mouseEvent.pageY - getTopOffset(document.getElementById("graph")))/document.getElementById("graph").clientHeight - 0.5 );
+    		// alert("x" + x);
+    		// alert("y" + y);
 
     		mx = document.getElementById("submit:mx");
     		mx.value = x;
@@ -51,42 +73,57 @@
     </script>
 </h:head>
 <f:view>
-	<h:form id="gr">
+
     <h:graphicImage url="data:image/jpg;base64,#{areaChecker.img}" id="graph" onclick="areaClick(event)" >
     </h:graphicImage>
-    </h:form>
-
     <h:form id="submit">
         <h:inputHidden  id="mx" value="#{areaChecker.mx}"/>
         <h:inputHidden  id="my" value="#{areaChecker.my}"/>
-        <f:ajax event="click" execute="mx my"  listener="#{areaChecker.clickListener}" />
+        <f:ajax event="click" execute="mx my" render=":graph :mainform:r :mainform:or :mainform:panelfor:" listener="#{areaChecker.clickListener}" />
     </h:form>
     
-
     <h:form id="mainform">
-
-
+    
         <div>R:
-	        <p:spinner id="r" value="#{input.r}" stepFactor="0.5" min="1" max="3"/>
+	        <p:spinner id="spr" value="#{input.r}" stepFactor="0.5" min="1" max="3">
+	        	<p:ajax event="valueChange" update="@this or :graph" render=":graph :mainform:r :mainform:or :mainform:panelfor:" process="@this" />
+	        </p:spinner>
+	        <h:outputText id="or" value="#{input.r}"/>
+	        <h:inputHidden  id="r" value="#{input.r}"/>
         </div>
+        <div>X = 
+        	<h:outputText id="x" value="#{input.x}" />
 
-        <div>X:
-
-        	<h:inputHidden id="x" value="#{input.x}" />
-	        <h:commandLink value = "-3" action="#{input.setX(-3)}"/> 
-	        <h:commandLink value = "-2" action="#{input.setX(-2)}"/>
-	        <h:commandLink value = "-1" action="#{input.setX(-1)}"/> 
-	        <h:commandLink value = "0" action="#{input.setX(0)}"/> 
-	        <h:commandLink value = "1" action="#{input.setX(1)}"/> 
-	        <h:commandLink value = "2" action="#{input.setX(2)}"/> 
-	        <h:commandLink value = "3" action="#{input.setX(3)}"/> 
-	        <h:commandLink value = "4" action="#{input.setX(4)}"/> 
-	        <h:commandLink value = "5" action="#{input.setX(5)}"/> 
-
-
-	        
+        	<br></br>
+        	
+	        <h:commandLink value = "-3" action="#{input.setX(-3)}">
+	        	<f:ajax execute="x" render="x"/>
+	        </h:commandLink>
+	        <h:commandLink value = "-2" action="#{input.setX(-2)}">
+	        	<f:ajax execute="x" render="x"/>
+	        </h:commandLink>
+	        <h:commandLink value = "-1" action="#{input.setX(-1)}"> 
+	        	<f:ajax execute="x" render="x"/>
+	        </h:commandLink>
+	        <h:commandLink value = "0" action="#{input.setX(0)}"> 
+	        	<f:ajax execute="x" render="x"/>
+	        </h:commandLink>
+	        <h:commandLink value = "1" action="#{input.setX(1)}"> 
+	        	<f:ajax execute="x" render="x"/>
+	        </h:commandLink>
+	        <h:commandLink value = "2" action="#{input.setX(2)}"> 
+	        	<f:ajax execute="x" render="x"/>
+	        </h:commandLink>
+	        <h:commandLink value = "3" action="#{input.setX(3)}"> 
+	        	<f:ajax execute="x" render="x"/>
+	        </h:commandLink>
+	        <h:commandLink value = "4" action="#{input.setX(4)}"> 
+	        	<f:ajax execute="x" render="x"/>
+	        </h:commandLink>
+	        <h:commandLink value = "5" action="#{input.setX(5)}"> 
+	        	<f:ajax execute="x" render="x"/>
+	        </h:commandLink>	        
         </div>
-
         <div>Y(-5..5):
             <h:inputText id="yIn" value="#{input.y}" validatorMessage="Out of range!">
                 <f:validateDoubleRange minimum="-5.0" maximum="5.0" for="yIn" />
@@ -96,8 +133,7 @@
 
         <div>
         <h:commandButton value="Добавить" action="#{areaChecker.submitHandler}">
-            <f:ajax execute=":mainform:x yIn" />
-            
+            <f:ajax execute="yIn x" render=":graph :mainform:r :mainform:or :mainform:panelfor: mainform"/>
         </h:commandButton>
         </div>
 
@@ -107,8 +143,7 @@
 
         <div>
         <h:commandButton value="Очистить" action="#{areaChecker.reset}">
-            <f:ajax  />
-            
+            <f:ajax render=":graph :mainform:panelfor:" />
         </h:commandButton>
         </div>
 

@@ -12,8 +12,8 @@ public class Input implements Serializable {
     //     r[0]=true;
     // }
 
-    private int x = 1;
-    private float y = 1;
+    private int x;
+    private float y;
     private float r = 1;
 
     public int getX() {
