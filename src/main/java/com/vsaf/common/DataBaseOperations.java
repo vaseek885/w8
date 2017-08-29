@@ -4,64 +4,140 @@ import com.vsaf.common.Point;
 
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.sql.*;
 
 
 public class DataBaseOperations {
+
+    private Connection connection = null;
+    PreparedStatement add_statement = null;
+    PreparedStatement delete_statement = null;
+    PreparedStatement readall_statement = null;
+
+    private void open_connection(){
+
+        if(connection == null){
+
+            try {   
+
+                Class.forName("org.postgresql.Driver");
+
+            } catch (ClassNotFoundException e) {
+
+                System.out.println("No PostgreSQL JDBC Driver?");
+                e.printStackTrace();
+                return;
+
+            }
+
+            System.out.println("PostgreSQL JDBC Driver registering");
+
+            try {
+                connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:6090/postgres", "s208070","yxu697");
+                String insertTableSQL = "INSERT INTO point"
+                        + "(x, y, r, contained) VALUES"
+                        + "(?,?,?,?)";
+                add_statement = connection.prepareStatement(insertTableSQL);  
+                delete_statement = connection.prepareStatement("DELETE FROM points");  
+                readall_statement = connection.prepareStatement("SELECT * FROM points");  
+
+            } catch (SQLException e) {
+
+                System.out.println("Connection Failed! Check output console");
+                e.printStackTrace();
+                return;
+
+            }
+        }
+    }
+
+    private void close_connection(){
+        try{
+            if(connection != null){
+                connection.close();
+            }  
+        } catch (SQLException ex){
+
+        }
+    }
+
+
     public void addPoint(Point point){
-        try {
-            // EntityManager em = EntityManagerUtil.getEntityManager();
-            // if (!isExist(point)){
-            //     em.getTransaction().begin();
-            //     em.persist(point);
-            //     em.getTransaction().commit();
-            // }
 
+        open_connection();
+        if (connection != null) {
 
-        }catch (Exception e){}
+            try {
+            
+                if(add_statement != null){
+                    System.out.println("Adding values x:" + point.getX() + "y:" + point.getY() + "r:" + point.getRadius());
+                    add_statement.setFloat(1, point.getX());//x
+                    add_statement.setFloat(2, point.getY());//y
+                    add_statement.setFloat(3, point.getRadius());//r
+                    add_statement.setBoolean(4, point.isIncluded());//included
+
+                    add_statement.executeUpdate();
+                }
+                else {
+                    System.out.println("no statement");
+                }
+
+            }catch (Exception e){}
+
+        } else {
+            System.out.println("Failed to make connection");
+        }
+
 
     }
-
-    public boolean isExist(Point point){
-        // EntityManager em = EntityManagerUtil.getEntityManager();
-        // em.getTransaction().begin();
-        // boolean result;
-
-        // Query query = em.createQuery("select p from Point p where p.x = :x and p.y = :y and p.radius = :r");
-        // query.setParameter("x", point.getX());
-        // query.setParameter("y", point.getY());
-        // query.setParameter("r", point.getRadius());
-        // result = (query.getResultList().isEmpty());
-        // em.getTransaction().commit();
-        // return !result;
-        return true;
-    }
-
 
     public void deleteAllPoints(){
-        // try {
-        //     EntityManager entityManager = EntityManagerUtil.getEntityManager();
-        //     entityManager.getTransaction().begin();
-        //     Query query = entityManager.createNativeQuery("DELETE FROM POINTS");
-        //     query.executeUpdate();
-        //     entityManager.getTransaction().commit();
-        // }catch (Exception e){}
+        open_connection();
+        if (connection != null) {
+
+            try {
+            
+                if(delete_statement != null){
+                    delete_statement.executeUpdate();
+                }
+                else {
+                    System.out.println("no statement");
+                }
+
+            }catch (Exception e){}
+
+        } else {
+            System.out.println("Failed to make connection");
+        }
 
     }
 
 
     public LinkedHashSet<Point> readAllTable(){
 
-        // EntityManager em = EntityManagerUtil.getEntityManager();
-        // em.getTransaction().begin();
-
-        // Query query = em.createQuery("select p from Point p");
-        // em.getTransaction().commit();
+        open_connection();
         LinkedHashSet<Point> points = new LinkedHashSet<Point>();
-        // List list = query.getResultList();
-        // for(Object obj : list){
-        //     points.add((Point) obj);
-        // }
-        // return points;
+        if (connection != null) {
+
+            try {
+            
+                if(readall_statement != null){
+                    ResultSet rs = null;
+                    
+                    rs = add_statement.executeQuery();
+                    while(rs.next()){
+                        points.add(new Point(rs.getFloat("x"),rs.getFloat("y"),rs.getFloat("x")));
+                    }
+                }
+                else {
+                    System.out.println("no statement");
+                }
+
+            }catch (Exception e){}
+
+        } else {
+            System.out.println("Failed to make connection");
+        }
         return points;
     }
 

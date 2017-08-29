@@ -87,21 +87,6 @@ public class AreaChecker implements Serializable{
         this.mx = mx;
     }
 
-    // private float parseR(int tmpr){
-    //     switch (tmpr){
-    //         case 0:
-    //              return 1f;
-    //         case 1:
-    //             return 1.5f;
-    //         case 2:
-    //             return 2f;
-    //         case 3:
-    //             return 2.5f;
-    //         case 4:
-    //             return 3f;
-    //         default: return 1f;
-    //     }
-    // }
     public void setMy(float my) {
         this.my = my;
     }
@@ -163,11 +148,11 @@ public class AreaChecker implements Serializable{
         while(itr.hasNext()) checkPoint(itr.next(), r);
     }
     private void checkPoint(Point p, float r){
-        if(p.getY()>=0&&p.getX()>=0&&p.getX()<=r/2&&p.getY()<=r){
+        if(p.getY()>=0&&p.getX()<=0&&p.getX()>=-r/2&&p.getY()<=(r+(p.getX()*2)) ){
             p.setIncluded(true);
             return;
         }
-        if(p.getX()<=0&&p.getX()>=-r&&p.getY()>=0&&p.getY()<=(0.5*p.getX()+r/2)){
+        if(p.getX()>=0&&p.getX()<=r&&p.getY()<=0&&p.getY()>=-r/2){
             p.setIncluded(true);
             return;
         }

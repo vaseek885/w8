@@ -3,24 +3,17 @@ package com.vsaf.common;
 import javax.annotation.PostConstruct;
 import java.io.Serializable;
 
-/**
- * Created by kover on 25.05.17.
- */
-public class Input implements Serializable {
-    // @PostConstruct
-    // private void postinit(){
-    //     r[0]=true;
-    // }
 
-    private int x;
+public class Input implements Serializable {
+    private float x;
     private float y;
     private float r = 1;
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(float x) {
         this.x = x;
     }
 
