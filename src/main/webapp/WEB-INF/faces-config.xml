@@ -11,19 +11,19 @@
     <managed-bean>
         <managed-bean-name>input</managed-bean-name>
         <managed-bean-class>com.vsaf.common.Input</managed-bean-class>
-        <managed-bean-scope>application</managed-bean-scope>
+        <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
 
     <managed-bean>
         <managed-bean-name>dbOps</managed-bean-name>
         <managed-bean-class>com.vsaf.common.DataBaseOperations</managed-bean-class>
-        <managed-bean-scope>application</managed-bean-scope>
+        <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
 
     <managed-bean>
         <managed-bean-name>areaChecker</managed-bean-name>
         <managed-bean-class>com.vsaf.common.AreaChecker</managed-bean-class>
-        <managed-bean-scope>application</managed-bean-scope>
+        <managed-bean-scope>session</managed-bean-scope>
         <managed-property>
             <property-name>input</property-name>
             <value>#{input}</value>

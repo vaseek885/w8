@@ -2,7 +2,7 @@ package com.vsaf.common;
 
 import com.vsaf.common.Point;
 
-import java.util.LinkedHashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
 
@@ -113,10 +113,10 @@ public class DataBaseOperations {
     }
 
 
-    public LinkedHashSet<Point> readAllTable(){
+    public ArrayList<Point> readAllTable(){
 
         open_connection();
-        LinkedHashSet<Point> points = new LinkedHashSet<Point>();
+        ArrayList<Point> points = new ArrayList<Point>();
         if (connection != null) {
 
             try {

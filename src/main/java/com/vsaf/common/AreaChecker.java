@@ -11,13 +11,12 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
+import java.util.ArrayList;
 
 
 public class AreaChecker implements Serializable{
-    private LinkedHashSet<Point> points;
+    private ArrayList<Point> points;
     DataBaseOperations dbOps ;
     public DataBaseOperations getDbOps(){
         return dbOps;
@@ -38,7 +37,7 @@ public class AreaChecker implements Serializable{
     }
     
 
-    public LinkedHashSet<Point> getPoints() {
+    public ArrayList<Point> getPoints() {
         return points;
     }
     @PostConstruct
@@ -46,7 +45,7 @@ public class AreaChecker implements Serializable{
         try {
             points = dbOps.readAllTable();
         } catch(Exception e){
-            points = new LinkedHashSet<Point>();
+            points = new ArrayList<Point>();
         }
     }
     public void addPoint(float x, float y, float r){
@@ -70,7 +69,7 @@ public class AreaChecker implements Serializable{
     }
     public void reset(){
         dbOps.deleteAllPoints();
-        points = new LinkedHashSet<Point>();
+        points = new ArrayList<Point>();
     }
     private float mx;
     private float my;
@@ -92,13 +91,13 @@ public class AreaChecker implements Serializable{
     }
 
     private boolean isValidInput(){
-        if(input.getR()==-1){
+        if(input.getR()>3||input.getR()<1){
             return false;
         }
-        if(input.getX()>5||input.getX()<-5){
+        if(input.getX()>5||input.getX()<-3){
             return false;
         }
-        if(input.getY()<-3.0||input.getY()>5.0){
+        if(input.getY()<-5.0||input.getY()>5.0){
             return false;
         }
         return true;
@@ -143,7 +142,7 @@ public class AreaChecker implements Serializable{
         int height = img.getHeight();
         g.fillOval(width/2 + (int)(point.getX()/r*80)-5, height/2 - (int)(point.getY()/r * 80) -5 , 10, 10);
     }
-    private void checkAllPoints(HashSet<Point> points, float r) {
+    private void checkAllPoints(ArrayList<Point> points, float r) {
         Iterator<Point> itr = points.iterator();
         while(itr.hasNext()) checkPoint(itr.next(), r);
     }

@@ -151,11 +151,11 @@
             <h:dataTable id="resultTable" value="#{areaChecker.points}" var="p">
                 <h:column>
                     <f:facet name="header" >X</f:facet>
-                    
+                    #{p.x}
                 </h:column>
                 <h:column>
                     <f:facet name="header" >Y</f:facet>
-
+                    #{p.y}
                 </h:column>
                 <h:column>
                     <f:facet name="header">R</f:facet>
@@ -163,7 +163,7 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header">Вхождение</f:facet>
-
+                    #{p.included}
                 </h:column>
             </h:dataTable>
         </h:panelGroup>
