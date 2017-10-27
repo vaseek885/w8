@@ -73,6 +73,9 @@
     </script>
 </h:head>
 <f:view>
+    <h:form>
+         <h:commandButton value="#{myBean.val}" action="#{myBean.action()}"/>
+    </h:form>
 
     <h:graphicImage url="data:image/jpg;base64,#{areaChecker.img}" id="graph" onclick="areaClick(event)" >
     </h:graphicImage>

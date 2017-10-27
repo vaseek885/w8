@@ -15,6 +15,12 @@
     </managed-bean>
 
     <managed-bean>
+        <managed-bean-name>myBean</managed-bean-name>
+        <managed-bean-class>com.vsaf.common.myBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+
+    <managed-bean>
         <managed-bean-name>dbOps</managed-bean-name>
         <managed-bean-class>com.vsaf.common.DataBaseOperations</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
